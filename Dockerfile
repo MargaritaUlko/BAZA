@@ -1,7 +1,6 @@
 # Используем базовый образ с Python
-FROM python:3.11-slim
+FROM python:3.11
 
-# Установите необходимые системные зависимости
 # Установите рабочий каталог
 WORKDIR /fastapi_app
 
@@ -11,34 +10,17 @@ COPY requirements.txt .
 # Установите зависимости из requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Установите uvicorn
+RUN pip install uvicorn
+
+# Проверьте установку uvicorn и выведите его путь
+RUN which uvicorn
+
 # Скопируйте исходный код в контейнер
 COPY . .
 
 # Откройте порт 8000
 EXPOSE 8000
 
-# Определите команду для запуска приложения
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
-
-#CMD ["gunicorn", "--version"]
-# Установите системные зависимости, если нужны (не обязательно)
-#RUN apt-get update && apt-get install -y \
-#    gcc \
-#    libffi-dev \
-#    && rm -rf /var/lib/apt/lists/*
-
-# Копируйте файл зависимостей
-COPY requirements.txt .
-RUN pip install --no-cache-dir gunicorn
-
-# Установите зависимости из requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Установите gunicorn
-RUN pip install --no-cache-dir gunicorn
-
-# Копируйте остальной код приложения
-COPY . .
-
-# Установите команду запуска приложения
-CMD ["gunicorn", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "main:app"]
+# Запустите приложение
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
