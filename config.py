@@ -18,4 +18,5 @@ DB_PASS_TEST = os.environ.get("DB_PASS_TEST")
 SECRET_AUTH = os.environ.get("SECRET_AUTH")
 
 SMTP_USER = os.environ.get("SMTP_USER")
+SMTP_USER2 = os.environ.get("SMTP_USER2")
 SMTP_PASSWORD = os.environ.get("SMTP_PASSWORD")

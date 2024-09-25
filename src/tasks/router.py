@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
 
-from main import current_user
+# from main import current_user
 from src.tasks.tasks import send_email_report_dashboard, show_email_report_dashboard
 
 router = APIRouter(prefix = "/report")
@@ -14,8 +14,10 @@ router = APIRouter(prefix = "/report")
     # "text": "Письмо отправлено"
     # }
 @router.get("/dashboard")
-def get_dashboard_report(user = Depends(current_user)):
-    show_email_report_dashboard.delay()
+# def get_dashboard_report(user = Depends(current_user)):
+def get_dashboard_report():
+    # show_email_report_dashboard.delay()
+    show_email_report_dashboard()
     return {
         "status": 200,
         "text": "Письмо отправлено"

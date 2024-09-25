@@ -1,0 +1,27 @@
+#version: '3.7'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+#      POSTGRES_DB: my_app
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  app:
+    build: .
+    ports:
+      - "2000:2000"
+    environment:
+#      DB_HOST: host.docker.internal  # Или IP-адрес сервера PostgreSQL
+#      DB_HOST: postgres  # Или IP-адрес сервера PostgreSQL
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+#      DB_PASSWORD: 123
+#      DB_NAME: my_app
+      DB_NAME: postgres

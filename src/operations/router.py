@@ -3,7 +3,7 @@ from datetime import timezone
 
 from fastapi import APIRouter, HTTPException, FastAPI
 from fastapi import Depends
-from fastapi_cache.decorator import cache
+# from fastapi_cache.decorator import cache
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from database import get_async_session
@@ -73,7 +73,7 @@ async def create_operation(new_operation: OperationCreate, session: AsyncSession
         raise HTTPException(status_code=500, detail=f"Failed to create operation: {str(e)}")
 
 @router.get("/bebra/")
-@cache(expire = 60)
+# @cache(expire = 60)
 def long_operation():
     time.sleep(9)
     return {"ijkn":"bebra123"}
