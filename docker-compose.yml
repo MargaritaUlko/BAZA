@@ -14,6 +14,7 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
   app:
     build: .
+    profiles: [backend]
     ports:
       - "2000:2000"
     environment:
